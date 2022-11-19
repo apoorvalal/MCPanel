@@ -8,7 +8,7 @@ This algorithm is also known as exponentiated gradient descent.
 It is worth noting that this estimator was proposed by Abadie et. al and
 the reason of new implementation here is to compare methods on some datasets.}
 \usage{
-adh_mp_rows(M, mask, niter = 10000, rel_tol = 1e-08)
+adh_mp_rows(M, mask, niter = 10000, rel_tol = 0.00000001)
 }
 \arguments{
 \item{M}{Matrix of observed entries. The input should be N (number of units) by T (number of time periods).}
@@ -30,7 +30,8 @@ It is worth noting that this estimator was proposed by Abadie et. al and
 the reason of new implementation here is to compare methods on some datasets.
 }
 \examples{
-adh_mp_rows(matrix(c(1,2,3,4),2,2), matrix(c(1,1,1,0),2,2))
+adh_mp_rows(matrix(c(1, 2, 3, 4), 2, 2), matrix(c(1, 1, 1, 0), 2, 2))
+
 }
 \seealso{
 The R package called \code{\link[Synth]{synth}}, written by Alberto Abadie, Alexis Diamond, and Jens Hainmueller.

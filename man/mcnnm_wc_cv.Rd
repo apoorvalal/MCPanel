@@ -6,10 +6,23 @@
 It creates some folds, divides the observed entry to training and validation on each fold, computes the best model on training sets and finds root mean squared error on validation sets.
 Finally, it chooses the model which gives the smallest average RMSE.}
 \usage{
-mcnnm_wc_cv(M, X, Z, mask, to_normalize = 1L, to_estimate_u = 1L,
-  to_estimate_v = 1L, to_add_ID = 1L, num_lam_L = 30L, num_lam_H = 30L,
-  niter = 100L, rel_tol = 1e-05, cv_ratio = 0.8, num_folds = 1L,
-  is_quiet = 1L)
+mcnnm_wc_cv(
+  M,
+  X,
+  Z,
+  mask,
+  to_normalize = 1L,
+  to_estimate_u = 1L,
+  to_estimate_v = 1L,
+  to_add_ID = 1L,
+  num_lam_L = 30L,
+  num_lam_H = 30L,
+  niter = 100L,
+  rel_tol = 0.00001,
+  cv_ratio = 0.8,
+  num_folds = 1L,
+  is_quiet = 1L
+)
 }
 \arguments{
 \item{M}{Matrix of observed entries. The input should be N (number of units) by T (number of time periods).}
@@ -22,7 +35,7 @@ mcnnm_wc_cv(M, X, Z, mask, to_normalize = 1L, to_estimate_u = 1L,
 
 \item{to_normalize}{Optional boolean parameter indicating whether to normalize covariates or not (columns of X and Z). The default value is 1. If this value is set to 0, the result would be sensitive to scales in covariates.}
 
-\item{to_estimate_u}{Optional boolean input for wheter estimating fixed unit effects (row means of M) or not. Default is 1.}
+\item{to_estimate_u}{Optional boolean input for wheter estimating fixed time effects (column means of M) or not. Default is 1.}
 
 \item{to_add_ID}{Optional boolean parameter indicating whether identity matrices are concatenated with X and Z in the model X * H * Z'. The default value is true (identity matrices are concatenated) and the model becomes X*H_X + X*H_{XZ}*Z^T+ H_Z Z^T (the rest of matrix in H forced to zero).}
 

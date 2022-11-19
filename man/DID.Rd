@@ -18,5 +18,5 @@ The matrix with all missing entries filled.
 Difference-in-Difference Estimator when multiple units are missing.
 }
 \examples{
-DID(matrix(c(1,2,3,4),2,2), matrix(c(1,1,1,0),2,2))
+DID(matrix(c(1, 2, 3, 4), 2, 2), matrix(c(1, 1, 1, 0), 2, 2))
 }

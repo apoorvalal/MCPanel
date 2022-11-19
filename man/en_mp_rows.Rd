@@ -28,7 +28,8 @@ The underlying algorithm is glmnet package in R.
 It is worth noting that this package was written by Friedman et. al.
 }
 \examples{
-en_mp_rows(matrix(c(1,2,3,4),2,2), matrix(c(1,1,1,0),2,2))
+en_mp_rows(matrix(c(1, 2, 3, 4), 2, 2), matrix(c(1, 1, 1, 0), 2, 2))
+
 }
 \seealso{
 \code{\link[glmnet]{cv.glmnet}}, written by Jerome Friedman, Trevor Hastie, Noah Simon, Junyang Qian, and Rob Tibshirani

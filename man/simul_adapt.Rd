@@ -22,5 +22,5 @@ The masked matrix which is one for control units and treated units before treatm
 This function models simultaneuous adaption and produces the desired binary mask.
 }
 \examples{
-simul_adapt(M = replicate(5,rnorm(5)), N_t = 3, T0 = 3)
+simul_adapt(M = replicate(5, rnorm(5)), N_t = 3, T0 = 3)
 }

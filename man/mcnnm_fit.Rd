@@ -2,11 +2,19 @@
 % Please edit documentation in R/RcppExports.R
 \name{mcnnm_fit}
 \alias{mcnnm_fit}
-\title{This function trains a model for a specified value of lambda_L. The result contains L, u, v, and lambda_L. 
+\title{This function trains a model for a specified value of lambda_L. The result contains L, u, v, and lambda_L.
 The only difference with mcnnm is that this function trains only for a specified value of lambda_L.}
 \usage{
-mcnnm_fit(M, mask, lambda_L, to_estimate_u = 1L, to_estimate_v = 1L,
-  niter = 1000L, rel_tol = 1e-05, is_quiet = 1L)
+mcnnm_fit(
+  M,
+  mask,
+  lambda_L,
+  to_estimate_u = 1L,
+  to_estimate_v = 1L,
+  niter = 1000L,
+  rel_tol = 0.00001,
+  is_quiet = 1L
+)
 }
 \arguments{
 \item{M}{Matrix of observed entries. The input should be N (number of units) by T (number of time periods).}
@@ -15,7 +23,7 @@ mcnnm_fit(M, mask, lambda_L, to_estimate_u = 1L, to_estimate_v = 1L,
 
 \item{lambda_L}{Required parameter for fitting the model as this function computes the result for a specified value of lambda_L.}
 
-\item{to_estimate_u}{Optional boolean input for wheter estimating fixed unit effects (row means of M) or not. Default is 1.}
+\item{to_estimate_u}{Optional boolean input for wheter estimating fixed time effects (column means of M) or not. Default is 1.}
 
 \item{niter}{Optional parameter on the number of iterations taken in the algorithm for each fixed value of lambda_L. The default value is 1000 and it is sufficiently large as the algorithm is using warm-start strategy.}
 
@@ -27,11 +35,11 @@ mcnnm_fit(M, mask, lambda_L, to_estimate_u = 1L, to_estimate_v = 1L,
 The fitted model for the given value of lambda_L.
 }
 \description{
-This function trains a model for a specified value of lambda_L. The result contains L, u, v, and lambda_L. 
+This function trains a model for a specified value of lambda_L. The result contains L, u, v, and lambda_L.
 The only difference with mcnnm is that this function trains only for a specified value of lambda_L.
 }
 \examples{
-mcnnm_fit(M = replicate(5,rnorm(5)), mask = matrix(rbinom(5*5,1,0.8),5,5), lambda_L = 0.5)
+mcnnm_fit(M = replicate(5, rnorm(5)), mask = matrix(rbinom(5 * 5, 1, 0.8), 5, 5), lambda_L = 0.5)
 }
 \seealso{
 \code{\link{mcnnm}}

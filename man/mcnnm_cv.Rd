@@ -6,16 +6,25 @@
 It creates some folds, divides the observed entry to training and validation on each fold, computes the best model on training sets and finds root mean squared error on validation sets.
 Finally, it chooses the model which gives the smallest average RMSE.}
 \usage{
-mcnnm_cv(M, mask, to_estimate_u = 1L, to_estimate_v = 1L,
-  num_lam_L = 100L, niter = 400L, rel_tol = 1e-05, cv_ratio = 0.8,
-  num_folds = 5L, is_quiet = 1L)
+mcnnm_cv(
+  M,
+  mask,
+  to_estimate_u = 1L,
+  to_estimate_v = 1L,
+  num_lam_L = 100L,
+  niter = 400L,
+  rel_tol = 0.00001,
+  cv_ratio = 0.8,
+  num_folds = 5L,
+  is_quiet = 1L
+)
 }
 \arguments{
 \item{M}{Matrix of observed entries. The input should be N (number of units) by T (number of time periods).}
 
 \item{mask}{Binary mask with the same shape as M containing observed entries.}
 
-\item{to_estimate_u}{Optional boolean input for wheter estimating fixed unit effects (row means of M) or not. Default is 1.}
+\item{to_estimate_u}{Optional boolean input for wheter estimating fixed time effects (column means of M) or not. Default is 1.}
 
 \item{num_lam_L}{Optional parameter on the number of lambda_Ls to consider for learning. The default number is 100 and lambda_L values are from minimum number which makes L zero to 1e-3 times this minimum number.}
 
@@ -38,5 +47,5 @@ It creates some folds, divides the observed entry to training and validation on 
 Finally, it chooses the model which gives the smallest average RMSE.
 }
 \examples{
-mcnnm_cv(M = replicate(5,rnorm(5)), mask = matrix(rbinom(5*5,1,0.8),5,5))
+mcnnm_cv(M = replicate(5, rnorm(5)), mask = matrix(rbinom(5 * 5, 1, 0.8), 5, 5))
 }

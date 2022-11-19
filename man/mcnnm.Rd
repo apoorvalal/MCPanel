@@ -4,9 +4,17 @@
 \alias{mcnnm}
 \title{This function trains all models for a given vector of lambda_L. Each model contains L, u, v, and lambda_L.}
 \usage{
-mcnnm(M, mask, num_lam_L = 100L, lambda_L = as.numeric(c()),
-  to_estimate_u = 1L, to_estimate_v = 1L, niter = 1000L,
-  rel_tol = 1e-05, is_quiet = 1L)
+mcnnm(
+  M,
+  mask,
+  num_lam_L = 100L,
+  lambda_L = as.numeric(c()),
+  to_estimate_u = 1L,
+  to_estimate_v = 1L,
+  niter = 1000L,
+  rel_tol = 0.00001,
+  is_quiet = 1L
+)
 }
 \arguments{
 \item{M}{Matrix of observed entries. The input should be N (number of units) by T (number of time periods).}
@@ -17,7 +25,7 @@ mcnnm(M, mask, num_lam_L = 100L, lambda_L = as.numeric(c()),
 
 \item{lambda_L}{Optional numeric vector containing all lambda_L values that user want to train model on sorted decreasingly (important for warm-start). By default this is empty (user need not to provide this) and num_lam_L and the rule explained above is used. However, once this vector is passed by user manually, num_lam_L argument will not be used}
 
-\item{to_estimate_u}{Optional boolean input for wheter estimating fixed unit effects (row means of M) or not. Default is 1.}
+\item{to_estimate_u}{Optional boolean input for wheter estimating fixed time effects (column means of M) or not. Default is 1.}
 
 \item{niter}{Optional parameter on the number of iterations taken in the algorithm for each fixed value of lambda_L. The default value is 1000 and it is sufficiently large as the algorithm is using warm-start strategy.}
 
@@ -32,5 +40,5 @@ The list of all models trained with the given vector of lambda_Ls.
 This function trains all models for a given vector of lambda_L. Each model contains L, u, v, and lambda_L.
 }
 \examples{
-mcnnm(M = replicate(5,rnorm(5)), mask = matrix(rbinom(5*5,1,0.8),5,5), lambda_L = c(10,5,1,0.5,0.1,0.05))
+mcnnm(M = replicate(5, rnorm(5)), mask = matrix(rbinom(5 * 5, 1, 0.8), 5, 5), lambda_L = c(10, 5, 1, 0.5, 0.1, 0.05))
 }

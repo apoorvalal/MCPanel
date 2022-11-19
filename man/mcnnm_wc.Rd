@@ -4,10 +4,23 @@
 \alias{mcnnm_wc}
 \title{This function trains all models for given vectors of lambda_L and lambda_H. Each model contains L, H, u, v, lambda_H, and lambda_L.}
 \usage{
-mcnnm_wc(M, X, Z, mask, num_lam_L = 30L, num_lam_H = 30L,
-  lambda_L = as.numeric(c()), lambda_H = as.numeric(c()),
-  to_normalize = 1L, to_estimate_u = 1L, to_estimate_v = 1L,
-  to_add_ID = 1L, niter = 100L, rel_tol = 1e-05, is_quiet = 1L)
+mcnnm_wc(
+  M,
+  X,
+  Z,
+  mask,
+  num_lam_L = 30L,
+  num_lam_H = 30L,
+  lambda_L = as.numeric(c()),
+  lambda_H = as.numeric(c()),
+  to_normalize = 1L,
+  to_estimate_u = 1L,
+  to_estimate_v = 1L,
+  to_add_ID = 1L,
+  niter = 100L,
+  rel_tol = 0.00001,
+  is_quiet = 1L
+)
 }
 \arguments{
 \item{M}{Matrix of observed entries. The input should be N (number of units) by T (number of time periods).}
@@ -28,7 +41,7 @@ mcnnm_wc(M, X, Z, mask, num_lam_L = 30L, num_lam_H = 30L,
 
 \item{to_normalize}{Optional boolean parameter indicating whether to normalize covariates or not (columns of X and Z). The default value is 1. If this value is set to 0, the result would be sensitive to scales in covariates.}
 
-\item{to_estimate_u}{Optional boolean input for wheter estimating fixed unit effects (row means of M) or not. Default is 1.}
+\item{to_estimate_u}{Optional boolean input for wheter estimating fixed time effects (column means of M) or not. Default is 1.}
 
 \item{to_add_ID}{Optional boolean parameter indicating whether identity matrices are concatenated with X and Z in the model X * H * Z'. The default value is true (identity matrices are concatenated) and the model becomes X*H_X + X*H_{XZ}*Z^T+ H_Z Z^T (the rest of matrix in H forced to zero).}
 
@@ -45,7 +58,7 @@ The list of all models trained with the given vector of lambda_Ls and lambda_Hs.
 This function trains all models for given vectors of lambda_L and lambda_H. Each model contains L, H, u, v, lambda_H, and lambda_L.
 }
 \examples{
-mcnnm_wc(M = replicate(5,rnorm(5)), X = replicate(3, rnorm(5)), Z = matrix(0L, 0, 0),  mask = matrix(rbinom(5*5,1,0.8),5,5), lambda_L=c(5,1,0.5,0.1), lambda_H=c(5,1,0.5,0.1))
+mcnnm_wc(M = replicate(5, rnorm(5)), X = replicate(3, rnorm(5)), Z = matrix(0L, 0, 0), mask = matrix(rbinom(5 * 5, 1, 0.8), 5, 5), lambda_L = c(5, 1, 0.5, 0.1), lambda_H = c(5, 1, 0.5, 0.1))
 }
 \seealso{
 \code{\link{mcnnm}}

@@ -19,5 +19,5 @@ stag_adapt(M, N_t, T0, treat_indices = 0)
 This function models staggered adaption and produces the desired binary mask.
 }
 \examples{
-stag_adapt(M = replicate(5,rnorm(5)), N_t = 3, T0 = 3)
+stag_adapt(M = replicate(5, rnorm(5)), N_t = 3, T0 = 3)
 }
