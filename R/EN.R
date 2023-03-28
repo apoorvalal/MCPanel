@@ -1,29 +1,4 @@
-logspace = function(d1, d2, n) exp(log(10) * seq(d1, d2, length.out = n))
-
-en_predict = function(M, mask, best_lam, best_alpha) {
-  treated_row = which(rowMeans(mask) < 1)
-  treated_cols = which(mask[treated_row, ] == 0)
-  control_cols = setdiff(1:ncol(M), treated_cols)
-  M_new = M
-  M_new[treated_row, ] = M[nrow(M), ]
-  M_new[nrow(M), ] = M[treated_row, ]
-  Z_train = M_new[1:(nrow(M_new) - 1), control_cols]
-  to_pred = M_new[nrow(M_new), control_cols]
-  if (length(which(to_pred == 0)) == length(control_cols)) {
-    weights = matrix(0L, nrow(M_new) - 1, 1)
-    intc = 0
-  } else {
-    A = glmnet(t(Z_train), M_new[nrow(M_new), control_cols], 'gaussian', lambda = best_lam, alpha = best_alpha, thresh = 1e-4)
-    weights = unname(A$beta[, 1])
-    intc = unname(A$a0[1])
-  }
-  M_pred = t(M_new[1:nrow(M_new) - 1, ]) %*% weights + intc * matrix(1L, ncol(M_new), 1);
-  return(M_pred)
-}
-
 #' Computing Elastic Net Estimator when multiple units are missing.
-#' The underlying algorithm is glmnet package in R.
-#' It is worth noting that this package was written by Friedman et. al.
 #'
 #' @param M Matrix of observed entries. The input should be N (number of units) by T (number of time periods).
 #' @param mask Binary mask with the same shape as M containing observed entries.
@@ -32,7 +7,7 @@ en_predict = function(M, mask, best_lam, best_alpha) {
 #' @param num_alpha Optional parameter on the number of alpha values (shape parameter). Default is 40.
 #' @return The matrix with all missing entries filled.
 #' @seealso \code{\link[glmnet]{cv.glmnet}}, written by Jerome Friedman, Trevor Hastie, Noah Simon, Junyang Qian, and Rob Tibshirani
-#'
+#' @export
 en_mp_rows = function(M, mask, num_folds = 5, num_lam = 100L, num_alpha = 40L) {
   M = M * mask
   treated_rows = which(rowMeans(mask) < 1)
@@ -102,4 +77,27 @@ en_cv_single_row = function(M, mask, num_folds = 5, num_alpha = 40L) {
     best_alpha = alpha[sample(1:num_alpha, 1)]
   }
   return(en_predict(M, mask, best_lam, best_alpha));
+}
+
+logspace = function(d1, d2, n) exp(log(10) * seq(d1, d2, length.out = n))
+
+en_predict = function(M, mask, best_lam, best_alpha) {
+  treated_row = which(rowMeans(mask) < 1)
+  treated_cols = which(mask[treated_row, ] == 0)
+  control_cols = setdiff(1:ncol(M), treated_cols)
+  M_new = M
+  M_new[treated_row, ] = M[nrow(M), ]
+  M_new[nrow(M), ] = M[treated_row, ]
+  Z_train = M_new[1:(nrow(M_new) - 1), control_cols]
+  to_pred = M_new[nrow(M_new), control_cols]
+  if (length(which(to_pred == 0)) == length(control_cols)) {
+    weights = matrix(0L, nrow(M_new) - 1, 1)
+    intc = 0
+  } else {
+    A = glmnet(t(Z_train), M_new[nrow(M_new), control_cols], 'gaussian', lambda = best_lam, alpha = best_alpha, thresh = 1e-4)
+    weights = unname(A$beta[, 1])
+    intc = unname(A$a0[1])
+  }
+  M_pred = t(M_new[1:nrow(M_new) - 1, ]) %*% weights + intc * matrix(1L, ncol(M_new), 1);
+  return(M_pred)
 }

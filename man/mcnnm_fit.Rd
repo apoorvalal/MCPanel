@@ -23,7 +23,9 @@ mcnnm_fit(
 
 \item{lambda_L}{Required parameter for fitting the model as this function computes the result for a specified value of lambda_L.}
 
-\item{to_estimate_u}{Optional boolean input for wheter estimating fixed time effects (column means of M) or not. Default is 1.}
+\item{to_estimate_u}{Optional boolean input for wheter estimating fixed unit effects (row means of M) or not. Default is 1.}
+
+\item{to_estimate_v}{Optional boolean input for wheter estimating fixed time effects (column means of M) or not. Default is 1.}
 
 \item{niter}{Optional parameter on the number of iterations taken in the algorithm for each fixed value of lambda_L. The default value is 1000 and it is sufficiently large as the algorithm is using warm-start strategy.}
 

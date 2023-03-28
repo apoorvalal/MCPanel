@@ -29,7 +29,9 @@ mcnnm_wc_lam_range(
 
 \item{to_normalize}{Optional boolean parameter indicating whether to normalize covariates or not (columns of X and Z). The default value is 1. If this value is set to 0, the result would be sensitive to scales in covariates.}
 
-\item{to_estimate_u}{Optional boolean input for wheter estimating fixed time effects (column means of M) or not. Default is 1.}
+\item{to_estimate_u}{Optional boolean input for wheter estimating fixed unit effects (row means of M) or not. Default is 1.}
+
+\item{to_estimate_v}{Optional boolean input for wheter estimating fixed time effects (column means of M) or not. Default is 1.}
 
 \item{to_add_ID}{Optional boolean parameter indicating whether identity matrices are concatenated with X and Z in the model X * H * Z'. The default value is true (identity matrices are concatenated) and the model becomes X*H_X + X*H_{XZ}*Z^T+ H_Z Z^T (the rest of matrix in H forced to zero).}
 

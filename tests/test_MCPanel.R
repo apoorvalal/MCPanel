@@ -1,8 +1,8 @@
 library(MCPanel)
 
-N = 20 # Number of units
-T = 20 # Number of time-periods
-R = 2 # Rank of matrix
+N = 50 # Number of units
+T = 50 # Number of time-periods
+R = 3  # Rank of matrix
 noise_sc = 0.1 # Noise scale
 delta_sc = 0.1 # delta scale
 gamma_sc = 0.1 # gamma scale
@@ -21,9 +21,9 @@ obs_mat = noisy_mat * mask
 
 ## Estimate using mcnnm_cv (cross-validation) on lambda values
 model_without_effects = mcnnm_cv(obs_mat, mask, to_estimate_u = 0, to_estimate_v = 0)
-model_with_delta = mcnnm_cv(obs_mat, mask, to_estimate_u = 1, to_estimate_v = 0) ## third and fourth parameter respectively are whether
-model_with_gamma = mcnnm_cv(obs_mat, mask, to_estimate_u = 0, to_estimate_v = 1) ## to estimate delta(u) or gamma(v)
-model_with_both = mcnnm_cv(obs_mat, mask, to_estimate_u = 1, to_estimate_v = 1)
+model_with_delta 	  = mcnnm_cv(obs_mat, mask, to_estimate_u = 1, to_estimate_v = 0) ## third and fourth parameter respectively are whether
+model_with_gamma 	  = mcnnm_cv(obs_mat, mask, to_estimate_u = 0, to_estimate_v = 1) ## to estimate delta(u) or gamma(v)
+model_with_both 	  = mcnnm_cv(obs_mat, mask, to_estimate_u = 1, to_estimate_v = 1)
 
 ## Check criteria
 sum(model_without_effects$u == 0) == N ## Checking if row-wise effects are zero
@@ -41,41 +41,32 @@ sum(model_with_both$v == 0) == T
 
 ## Comparing minimum RMSEs
 
-model_without_effects$min_RMSE
 model_with_delta$min_RMSE
+model_without_effects$min_RMSE
 model_with_gamma$min_RMSE
 model_with_both$min_RMSE
 
 ## Construct estimations based on models
 
-model_without_effects$est = model_without_effects$L + replicate(T, model_without_effects$u) + t(replicate(N, model_without_effects$v))
-model_with_delta$est = model_with_delta$L + replicate(T, model_with_delta$u) + t(replicate(N, model_with_delta$v))
-model_with_gamma$est = model_with_gamma$L + replicate(T, model_with_gamma$u) + t(replicate(N, model_with_gamma$v))
-model_with_both$est = model_with_both$L + replicate(T, model_with_both$u) + t(replicate(N, model_with_both$v))
+model_without_effects$est = model_without_effects |> predict_mc()
+model_with_delta$est      = model_with_delta 	  |> predict_mc()
+model_with_gamma$est      = model_with_gamma      |> predict_mc()
+model_with_both$est       = model_with_both       |> predict_mc()
 
 ## Compute error matrices
-
 model_without_effects$err = model_without_effects$est - true_mat
 model_with_delta$err = model_with_delta$est - true_mat
 model_with_gamma$err = model_with_gamma$est - true_mat
 model_with_both$err = model_with_both$est - true_mat
 
 ## Compute masked error matrices
-
 model_without_effects$msk_err = model_without_effects$err * (1 - mask)
 model_with_delta$msk_err = model_with_delta$err * (1 - mask)
 model_with_gamma$msk_err = model_with_gamma$err * (1 - mask)
 model_with_both$msk_err = model_with_both$err * (1 - mask)
 
 ## Compute RMSE on test set
-
-model_without_effects$test_RMSE = sqrt((1 / sum(1 - mask)) * sum(model_without_effects$msk_err^2))
-model_with_delta$test_RMSE = sqrt((1 / sum(1 - mask)) * sum(model_with_delta$msk_err^2))
-model_with_gamma$test_RMSE = sqrt((1 / sum(1 - mask)) * sum(model_with_gamma$msk_err^2))
-model_with_both$test_RMSE = sqrt((1 / sum(1 - mask)) * sum(model_with_both$msk_err^2))
-
-## Print RMSE on test set
-print(model_without_effects$test_RMSE)
-print(model_with_delta$test_RMSE)
-print(model_with_gamma$test_RMSE)
-print(model_with_both$test_RMSE)
+(model_without_effects$test_RMSE = sqrt((1 / sum(1 - mask)) * sum(model_without_effects$msk_err^2)))
+(model_with_delta$test_RMSE = sqrt((1 / sum(1 - mask)) * sum(model_with_delta$msk_err^2)))
+(model_with_gamma$test_RMSE = sqrt((1 / sum(1 - mask)) * sum(model_with_gamma$msk_err^2)))
+(model_with_both$test_RMSE = sqrt((1 / sum(1 - mask)) * sum(model_with_both$msk_err^2)))

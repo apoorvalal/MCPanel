@@ -25,7 +25,9 @@ mcnnm(
 
 \item{lambda_L}{Optional numeric vector containing all lambda_L values that user want to train model on sorted decreasingly (important for warm-start). By default this is empty (user need not to provide this) and num_lam_L and the rule explained above is used. However, once this vector is passed by user manually, num_lam_L argument will not be used}
 
-\item{to_estimate_u}{Optional boolean input for wheter estimating fixed time effects (column means of M) or not. Default is 1.}
+\item{to_estimate_u}{Optional boolean input for wheter estimating fixed unit effects (row means of M) or not. Default is 1.}
+
+\item{to_estimate_v}{Optional boolean input for wheter estimating fixed time effects (column means of M) or not. Default is 1.}
 
 \item{niter}{Optional parameter on the number of iterations taken in the algorithm for each fixed value of lambda_L. The default value is 1000 and it is sufficiently large as the algorithm is using warm-start strategy.}
 

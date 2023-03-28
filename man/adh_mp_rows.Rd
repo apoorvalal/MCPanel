@@ -2,11 +2,7 @@
 % Please edit documentation in R/ADH.R
 \name{adh_mp_rows}
 \alias{adh_mp_rows}
-\title{Computing Synthetic Control Estimator when multiple units are missing.
-The underlying algorithm is Mirror Descent with Entropy Regularizer.
-This algorithm is also known as exponentiated gradient descent.
-It is worth noting that this estimator was proposed by Abadie et. al and
-the reason of new implementation here is to compare methods on some datasets.}
+\title{Computing Synthetic Control Estimator when multiple units are missing.}
 \usage{
 adh_mp_rows(M, mask, niter = 10000, rel_tol = 0.00000001)
 }
@@ -23,16 +19,9 @@ adh_mp_rows(M, mask, niter = 10000, rel_tol = 0.00000001)
 The matrix with all missing entries filled.
 }
 \description{
-Computing Synthetic Control Estimator when multiple units are missing.
-The underlying algorithm is Mirror Descent with Entropy Regularizer.
-This algorithm is also known as exponentiated gradient descent.
-It is worth noting that this estimator was proposed by Abadie et. al and
-the reason of new implementation here is to compare methods on some datasets.
-}
-\examples{
-adh_mp_rows(matrix(c(1, 2, 3, 4), 2, 2), matrix(c(1, 1, 1, 0), 2, 2))
-
-}
-\seealso{
-The R package called \code{\link[Synth]{synth}}, written by Alberto Abadie, Alexis Diamond, and Jens Hainmueller.
+The underlying algorithm is Mirror Descent with
+Entropy Regularizer. This algorithm is also known as exponentiated
+gradient descent. It is worth noting that this estimator was
+proposed by Abadie et. al and the reason of new implementation here
+is to compare methods on some datasets.
 }

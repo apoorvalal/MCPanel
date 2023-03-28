@@ -22,9 +22,11 @@ mcnnm_cv(
 \arguments{
 \item{M}{Matrix of observed entries. The input should be N (number of units) by T (number of time periods).}
 
-\item{mask}{Binary mask with the same shape as M containing observed entries.}
+\item{mask}{Binary mask with the same shape as M containing observed entries. This is a missingness mask (not a treatment matrix: compute it as 1-W for treatment matrix W).}
 
-\item{to_estimate_u}{Optional boolean input for wheter estimating fixed time effects (column means of M) or not. Default is 1.}
+\item{to_estimate_u}{Optional boolean input for wheter estimating fixed unit effects (row means of M) or not. Default is 1.}
+
+\item{to_estimate_v}{Optional boolean input for wheter estimating fixed time effects (column means of M) or not. Default is 1.}
 
 \item{num_lam_L}{Optional parameter on the number of lambda_Ls to consider for learning. The default number is 100 and lambda_L values are from minimum number which makes L zero to 1e-3 times this minimum number.}
 
