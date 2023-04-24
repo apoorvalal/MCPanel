@@ -25,7 +25,8 @@ imputationY = function(
       kernel = "anovadot",
       kpar = list(sigma = 0.1),
       features = nrow(Y0)/2, k = 3
-    )) {
+    ),
+    knn_k = 3) {
   # initialise list
   result = list()
   ######################################################################
@@ -135,17 +136,18 @@ imputation_ATT = function(
 #' @export
 print.imputationATT = \(x, prec = 3){
   cat("ATT estimates \n")
-  round(colMeans(with(x, event_study_estimates[-(1:T0),])), prec)
+  round(colMeans(with(x, event_study_estimates[-(1:T0),,drop=FALSE])), prec)
 }
 
 # %% ####################################################
 #' plot method for imputationATT
 #' @export
-plot.imputationATT = \(x, est_names = colnames(x$event_study_estimates), prec = 2){
+plot.imputationATT = \(x, est_names = colnames(x$event_study_estimates), prec = 2,
+    twd = 1.2){
   # subset if necessary
   ests = x$event_study_estimates[, est_names]
   # compute ATTs (added to legend)
-  atts = round(colMeans(with(x, ests[-(1:T0), ])), prec)
+  atts = round(colMeans(ests[-(1:x$T0), ,drop=FALSE]), prec)
   colours = RColorBrewer::brewer.pal(ncol(ests), "Paired")
   matplot(ests,
     type = 'l', col = colours, lwd = 2, lty = 2,
@@ -156,7 +158,7 @@ plot.imputationATT = \(x, est_names = colnames(x$event_study_estimates), prec = 
   abline(v = x$T0, lty = 4)
   legend("bottomleft", paste0(1:ncol(ests), " ", colnames(ests), " : ", atts),
     col = colours, lty = 1, ncol = 2, cex = 0.9,
-    x.intersp = 0.8, text.width = 6, lwd = 5
+    x.intersp = 0.8, text.width = twd, lwd = 5
   )
   axis(2)
   axis(side = 1, at = 1:nrow(ests), labels = as.numeric(rownames(ests)))
