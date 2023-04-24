@@ -14,6 +14,7 @@
 #' @return The minimum value of lambda_L causing L to be zero.
 #' @examples
 #' mcnnm_lam_range(M = replicate(5, rnorm(5)), mask = matrix(rbinom(5 * 5, 1, 0.8), 5, 5))
+#' @export
 mcnnm_lam_range = function(M, mask,
     to_estimate_u = 1L, to_estimate_v = 1L,
     niter = 1000L, rel_tol = 1e-5) {
@@ -32,6 +33,7 @@ mcnnm_lam_range = function(M, mask,
 #' @return The list of all models trained with the given vector of lambda_Ls.
 #' @examples
 #' mcnnm(M = replicate(5, rnorm(5)), mask = matrix(rbinom(5 * 5, 1, 0.8), 5, 5), lambda_L = c(10, 5, 1, 0.5, 0.1, 0.05))
+#' @export
 mcnnm = function(M, mask, num_lam_L = 100L, lambda_L = as.numeric(c()),
     to_estimate_u = 1L, to_estimate_v = 1L,
     niter = 1000L, rel_tol = 1e-5, is_quiet = 1L) {
@@ -51,6 +53,7 @@ mcnnm = function(M, mask, num_lam_L = 100L, lambda_L = as.numeric(c()),
 #' @examples
 #' mcnnm_fit(M = replicate(5, rnorm(5)), mask = matrix(rbinom(5 * 5, 1, 0.8), 5, 5), lambda_L = 0.5)
 #' @seealso \code{\link{mcnnm}}
+#' @export
 mcnnm_fit = function(M, mask, lambda_L,
     to_estimate_u = 1L, to_estimate_v = 1L,
     niter = 1000L, rel_tol = 1e-5, is_quiet = 1L) {
@@ -76,6 +79,7 @@ mcnnm_fit = function(M, mask, lambda_L,
 #' @return The best model fitted using lambda_L chosen via cross-validation. The final model is fitted to all observed entries (not only training set). The output also includes the vector of average root mean squared error for different values of lambda_L.
 #' @examples
 #' mcnnm_cv(M = replicate(5, rnorm(5)), mask = matrix(rbinom(5 * 5, 1, 0.8), 5, 5))
+#' @export
 mcnnm_cv = function(
     M, mask,
     to_estimate_u = 1L, to_estimate_v = 1L,
@@ -103,6 +107,7 @@ mcnnm_cv = function(
 #' @examples
 #' mcnnm_wc_lam_range(M = replicate(5, rnorm(5)), X = replicate(3, rnorm(5)), Z = matrix(0L, 0, 0), mask = matrix(rbinom(5 * 5, 1, 0.8), 5, 5))
 #' @seealso \code{\link{mcnnm_lam_range}}
+#' @export
 mcnnm_wc_lam_range = function(
     M, X, Z, mask,
     to_normalize = 1L, to_estimate_u = 1L, to_estimate_v = 1L,
@@ -128,6 +133,7 @@ mcnnm_wc_lam_range = function(
 #' @examples
 #' mcnnm_wc(M = replicate(5, rnorm(5)), X = replicate(3, rnorm(5)), Z = matrix(0L, 0, 0), mask = matrix(rbinom(5 * 5, 1, 0.8), 5, 5), lambda_L = c(5, 1, 0.5, 0.1), lambda_H = c(5, 1, 0.5, 0.1))
 #' @seealso \code{\link{mcnnm}}
+#' @export
 
 mcnnm_wc = function(M, X, Z, mask, num_lam_L = 30L,
     num_lam_H = 30L, lambda_L = as.numeric(c()),
@@ -152,6 +158,7 @@ mcnnm_wc = function(M, X, Z, mask, num_lam_L = 30L,
 #' @return The fitted model for the given value of lambda_L and lambda_H. The result contains L, H, u, v, lambda_L, and lambda_H.
 #' @examples
 #' mcnnm_wc_fit(M = replicate(5, rnorm(5)), X = replicate(3, rnorm(5)), Z = matrix(0L, 0, 0), mask = matrix(rbinom(5 * 5, 1, 0.8), 5, 5), lambda_L = 0.1, lambda_H = 0.1)
+#' @export
 #' @seealso \code{\link{mcnnm_fit}}, \code{\link{mcnnm_wc}}
 mcnnm_wc_fit = function(M, X, Z, mask,
     lambda_L, lambda_H,
@@ -178,6 +185,7 @@ mcnnm_wc_fit = function(M, X, Z, mask,
 #' examples
 #' mcnnm_wc_cv(M = replicate(5,rnorm(5)), X = replicate(3, rnorm(5)), Z = matrix(0L, 0, 0),  mask = matrix(rbinom(5*5,1,0.8),5,5))
 #' @seealso \code{\link{mcnnm_cv}}
+#' @export
 mcnnm_wc_cv = function(M, X, Z, mask, to_normalize = 1L, to_estimate_u = 1L, to_estimate_v = 1L, to_add_ID = 1L, num_lam_L = 30L, num_lam_H = 30L, niter = 100L, rel_tol = 1e-5, cv_ratio = 0.8, num_folds = 1L, is_quiet = 1L) {
   .Call('_MCPanel_mcnnm_wc_cv', PACKAGE = 'MCPanel', M, X, Z, mask, to_normalize, to_estimate_u, to_estimate_v, to_add_ID, num_lam_L, num_lam_H, niter, rel_tol, cv_ratio, num_folds, is_quiet)
 }

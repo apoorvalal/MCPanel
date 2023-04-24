@@ -1,25 +1,36 @@
+export(DID)
+export(KKNN)
+export(adh_mp_rows)
+export(en_mp_rows)
+export(imputationY)
+export(imputation_ATT)
+export(mcnnm)
+export(mcnnm_cv)
+export(mcnnm_fit)
+export(mcnnm_lam_range)
+export(mcnnm_wc)
+export(mcnnm_wc_cv)
+export(mcnnm_wc_fit)
+export(mcnnm_wc_lam_range)
+export(panelMat)
+export(predict_mc)
+export(simul_adapt)
+export(stag_adapt)
+import(data.table)
+import(dfms)
+import(filling)
+import(kernlab)
+import(sparseDFM)
+
+S3method(plot,imputationATT)
+S3method(print,imputationATT)
+
+importFrom(FNN,get.knnx)
 importFrom(Rcpp, evalCpp)
-useDynLib(MCPanel)
-
-export(
-	mcnnm,
-	mcnnm_cv,
-	mcnnm_fit,
-	mcnnm_lam_range,
-	mcnnm_wc,
-	mcnnm_wc_cv,
-	mcnnm_wc_fit,
-	mcnnm_wc_lam_range,
-	en_mp_rows,
-	DID,
-	adh_mp_rows,
-	stag_adapt,
-	simul_adapt,
-	panelMatrices,
-	predict_mc
-)
-
 importFrom(latex2exp, TeX)
 importFrom(glmnet, glmnet, cv.glmnet)
+
 importFrom(ggplot2, ggplot)
-import(data.table)
+
+useDynLib(MCPanel)
+

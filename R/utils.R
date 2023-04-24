@@ -1,13 +1,13 @@
-#' Convert a long panel to wide matrix (cleaner data.table version)
+#' Convert a long panel to wide (N X T) matrix
 #' @param dt data.table in long panel format
 #' @param unit_id unit id name
 #' @param time_id time id name
 #' @param treat   treatement name
 #' @param outcome outcome name
-#' @return list with treatment matrix W, outcome matrix Y, N0 (number of control units), and T0 (number of untreated periods)
+#' @return list with treatment matrix W, outcome matrix Y, untreated potential outcome matrix Y0, N0 (number of control units), and T0 (number of untreated periods)
 #' @import data.table
 #' @export
-panelMatrices = function(dt, unit_id, time_id, treat, outcome) {
+panelMat = function(dt, unit_id, time_id, treat, outcome) {
   dt = as.data.table(dt)
   # function to extract first column, convert it to rownames for a matrix
   matfy = function(X) {
@@ -25,10 +25,11 @@ panelMatrices = function(dt, unit_id, time_id, treat, outcome) {
   kv = c(unit_id, time_id, outcome)
   Y = matfy(dcast(dt[, ..kv], fmla, value.var = outcome))
   # move treated units to bottom of W and Y matrix
-  treatIDs = which(rowSums(W) > 1)
+  treatIDs = which(rowSums(W) > 0)
   W = rbind(W[-treatIDs, ], W[treatIDs, , drop = FALSE])
   Y = rbind(Y[-treatIDs, ], Y[treatIDs, , drop = FALSE])
   N0 = nrow(W) - length(treatIDs)
   T0 = min(which(colSums(W) > 0)) - 1
-  list(W = W, Y = Y, N0 = N0, T0 = T0)
+  out = list(W = W, Y = Y, Y0 = replace(Y, W == 1, NA), N0 = N0, T0 = T0)
+  return(out)
 }
