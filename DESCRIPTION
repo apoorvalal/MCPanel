@@ -3,21 +3,26 @@ Type: Package
 Title: Matrix Completion algorithms for Causal Panel Data Models
 Version: 0.0
 Date: 2017-11-13
-Authors@R: c(person("Susan", "Athey", role = "aut",
-                     email = "athey@susanathey.com"),
-             person("Mohsen", "Bayati", role = "aut",
-	      	     email = "bayati@stanford.edu"),
-	     person("Nikolay", "Doudchenko", role = "aut",
-	      	     email = "nikolay.doudchenko@stanford.edu"),
-	     person("Guido", "Imbens", role = "aut",
-	      	     email = "imbens@stanford.edu"),
-             person("Khashayar", "Khosravi", role = c("aut", "cre"),
-                     email = "khosravi@stanford.edu"))
+Authors@R: c(
+						person("Susan", "Athey", role = "aut",
+              email = "athey@susanathey.com"),
+            person("Mohsen", "Bayati", role = "aut",
+	      	    email = "bayati@stanford.edu"),
+						person("Nikolay", "Doudchenko", role = "aut",
+							email = "nikolay.doudchenko@stanford.edu"),
+						person("Guido", "Imbens", role = "aut",
+							email = "imbens@stanford.edu"),
+            person("Khashayar", "Khosravi", role = c("aut", "cre"),
+              email = "khosravi@stanford.edu"),
+						person("Apoorva", "Lal", role = c("ctb"),
+							email = "apoorval@stanford.edu")
+						)
 Author: Susan Athey [aut],
  	Mohsen Bayati [aut],
-        Nikolay Doudchenko [aut],
+  Nikolay Doudchenko [aut],
 	Guido Imbens [aut],
-	Khashayar Khosravi [aut, cre]
+	Khashayar Khosravi [aut, cre],
+	Apoorva Lal [ctb]
 Maintainer: Khashayar Khosravi <khosravi@stanford.edu>
 Description: Given any matrix which some of its entries are missing, it is important
 	to recover (estimate) missing entries. Inference questions usually can be only
@@ -25,7 +30,7 @@ Description: Given any matrix which some of its entries are missing, it is impor
 	functions to accomplish this task effectively.
 Encoding: UTF-8
 LazyData: true
-Imports: Rcpp (>= 0.12.13), RcppEigen, latex2exp, ggplot2, glmnet, dfms, sparseDFM
+Imports: Rcpp, RcppEigen, glmnet, dfms, sparseDFM, data.table, kernlab, filling
 LinkingTo: Rcpp, RcppEigen
 License: GPL-2
 RoxygenNote: 7.2.3

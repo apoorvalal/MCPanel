@@ -26,18 +26,7 @@ using Abadie, Diamond, Hainmueller (2010) California Prop 99 data.
 
 ``` r
 # install.packages("apoorvalal/MCPanel")
-library(MCPanel)
-library(synthdid) # for data
-```
-
-    ## 
-    ## Attaching package: 'synthdid'
-
-    ## The following object is masked from 'package:LalRUtils':
-    ## 
-    ##     panelMatrices
-
-``` r
+pacman::p_load(MCPanel, synthdid) # for data
 data(california_prop99)
 ```
 
@@ -68,11 +57,11 @@ print(est)
     ## ATT estimates
 
     ##               DFM        sparse DFM               knn        kernel KNN 
-    ##            -55.30            -55.42            -26.49            -23.23 
+    ##            -55.30            -55.42            -26.69            -23.23 
     ##               did matrix completion synthetic control   elastic net (V) 
     ##            -27.35            -20.00            -19.46            -11.49 
     ##   elastic net (H) 
-    ##            -19.70
+    ##            -18.86
 
 The plot method makes an event study figure. The legend contains ATT
 estimates, and its width may need to be customized.

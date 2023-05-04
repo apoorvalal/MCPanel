@@ -24,8 +24,7 @@ using Abadie, Diamond, Hainmueller (2010) California Prop 99 data.
 
 ```{r}
 # install.packages("apoorvalal/MCPanel")
-library(MCPanel)
-library(synthdid) # for data
+pacman::p_load(MCPanel, synthdid) # for data
 data(california_prop99)
 ```
 
