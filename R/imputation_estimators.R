@@ -24,7 +24,7 @@ imputationY = function(
     kknn_args = list(
       kernel = "anovadot",
       kpar = list(sigma = 0.1),
-      features = nrow(Y0)/2, k = 3
+      features = nrow(Y0) / 2, k = 3
     ),
     knn_k = 3) {
   # initialise list
@@ -113,8 +113,7 @@ imputationY = function(
 imputation_ATT = function(
     df, unit_id, time_id, treatment, outcome,
     imputation_methods = c("did", "dfm", "sdfm", "knn", "kknn", "mc", "sc", "env", "enh"),
-    ...
-  ) {
+    ...) {
   # call panelMat
   setup = panelMat(df, unit_id, time_id, treatment, outcome)
   # keep track of treated unit indices
@@ -124,7 +123,8 @@ imputation_ATT = function(
   # time-average of treated outcomes for entire panel
   setup[['treat_time_avgs']] = with(setup, colMeans(Y[treat_indices, , drop = FALSE]))
   # difference this from imputation
-  setup[['event_study_estimates']] = do.call(cbind, lapply(setup$imputations,
+  setup[['event_study_estimates']] = do.call(cbind, lapply(
+    setup$imputations,
     \(x) setup$treat_time_avgs - colMeans(x[setup$treat_indices, , drop = FALSE])
   ))
   class(setup) = "imputationATT"
@@ -136,18 +136,18 @@ imputation_ATT = function(
 #' @export
 print.imputationATT = \(x, prec = 3){
   cat("ATT estimates \n")
-  round(colMeans(with(x, event_study_estimates[-(1:T0),,drop=FALSE])), prec)
+  round(colMeans(with(x, event_study_estimates[-(1:T0), , drop = FALSE])), prec)
 }
 
 # %% ####################################################
 #' plot method for imputationATT
 #' @export
 plot.imputationATT = \(x, est_names = colnames(x$event_study_estimates), prec = 2,
-    twd = 1.2){
+  twd = 1.2){
   # subset if necessary
   ests = x$event_study_estimates[, est_names]
   # compute ATTs (added to legend)
-  atts = round(colMeans(ests[-(1:x$T0), ,drop=FALSE]), prec)
+  atts = round(colMeans(ests[-(1:x$T0), , drop = FALSE]), prec)
   colours = RColorBrewer::brewer.pal(ncol(ests), "Paired")
   matplot(ests,
     type = 'l', col = colours, lwd = 2, lty = 2,
@@ -163,4 +163,3 @@ plot.imputationATT = \(x, est_names = colnames(x$event_study_estimates), prec = 
   axis(2)
   axis(side = 1, at = 1:nrow(ests), labels = as.numeric(rownames(ests)))
 }
-
